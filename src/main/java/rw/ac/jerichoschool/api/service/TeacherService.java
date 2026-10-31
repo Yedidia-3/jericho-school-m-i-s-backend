@@ -45,6 +45,10 @@ public class TeacherService {
         return teacherRepo.findById(id);
     }
 
+    public List<Teacher> findBySubjectName(String name) {
+        return teacherRepo.findBySubjectName(name);
+    }
+
     public String updateTeacher(UUID id, Teacher newData) {
         Optional<Teacher> existing = teacherRepo.findById(id);
         if (existing.isEmpty()) {
