@@ -29,6 +29,10 @@ public class ClassroomService {
         return classroomRepo.findById(id);
     }
 
+    public List<Classroom> findFreeClassrooms() {
+        return classroomRepo.findFreeClassrooms();
+    }
+
     public String updateClassroom(UUID id, Classroom newData) {
         Optional<Classroom> existing = classroomRepo.findById(id);
         if (existing.isEmpty()) {

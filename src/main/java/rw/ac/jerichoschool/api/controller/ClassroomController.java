@@ -40,6 +40,11 @@ public class ClassroomController {
         return new ResponseEntity<>(classroomServ.findAllClassrooms(), HttpStatus.OK);
     }
 
+    @GetMapping(value = "/free")
+    public ResponseEntity<?> findFree() {
+        return new ResponseEntity<>(classroomServ.findFreeClassrooms(), HttpStatus.OK);
+    }
+
     @GetMapping(value = "/{id}")
     public ResponseEntity<?> findById(@PathVariable UUID id) {
         Optional<Classroom> classroom = classroomServ.findClassroomById(id);
