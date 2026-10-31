@@ -29,6 +29,10 @@ public class SubjectService {
         return subjectRepo.findById(id);
     }
 
+    public List<Subject> findUnusedSubjects() {
+        return subjectRepo.findUnusedSubjects();
+    }
+
     public String updateSubject(UUID id, Subject newData) {
         Optional<Subject> existing = subjectRepo.findById(id);
         if (existing.isEmpty()) {

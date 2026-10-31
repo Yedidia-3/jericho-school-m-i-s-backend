@@ -40,6 +40,11 @@ public class SubjectController {
         return new ResponseEntity<>(subjectServ.findAllSubjects(), HttpStatus.OK);
     }
 
+    @GetMapping(value = "/unused")
+    public ResponseEntity<?> findUnused() {
+        return new ResponseEntity<>(subjectServ.findUnusedSubjects(), HttpStatus.OK);
+    }
+
     @GetMapping(value = "/{id}")
     public ResponseEntity<?> findById(@PathVariable UUID id) {
         Optional<Subject> subject = subjectServ.findSubjectById(id);
