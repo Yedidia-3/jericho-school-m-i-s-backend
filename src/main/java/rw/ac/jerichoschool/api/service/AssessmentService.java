@@ -86,6 +86,29 @@ public class AssessmentService {
         return "Assessment deleted successfully";
     }
 
+    public String changeStatus(UUID id, AssessmentStatus newStatus) {
+        Optional<Assessment> existing = assessmentRepo.findById(id);
+        if (existing.isEmpty()) {
+            return "The assessment with that id does not exist";
+        }
+        Assessment assessment = existing.get();
+        AssessmentStatus current = assessment.getStatus();
+
+        boolean allowed = false;
+        if (current == AssessmentStatus.PLANNED) {
+            allowed = newStatus == AssessmentStatus.SAT || newStatus == AssessmentStatus.ABSENT;
+        } else if (current == AssessmentStatus.SAT) {
+            allowed = newStatus == AssessmentStatus.GRADED || newStatus == AssessmentStatus.ABSENT;
+        }
+
+        if (!allowed) {
+            return "Cannot change status from " + current + " to " + newStatus;
+        }
+        assessment.setStatus(newStatus);
+        assessmentRepo.save(assessment);
+        return "Assessment status updated successfully";
+    }
+
     private String copyAssessment(Assessment target, Assessment newData) {
         if (newData.getPupil() == null || newData.getPupil().getId() == null) {
             return "The pupil with that id does not exist";
@@ -104,7 +127,6 @@ public class AssessmentService {
         }
 
         target.setAssessmentDate(newData.getAssessmentDate());
-        target.setStatus(newData.getStatus());
         target.setTerm(newData.getTerm());
         target.setMaxMarks(newData.getMaxMarks());
         target.setPupil(pupil.get());
