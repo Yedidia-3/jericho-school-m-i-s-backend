@@ -68,6 +68,10 @@ public class AssessmentService {
         return assessmentRepo.findByAssessmentDateBetweenOrderByAssessmentDateAsc(start, end);
     }
 
+    public List<Object[]> countByStatus() {
+        return assessmentRepo.countByStatus();
+    }
+
     public String updateAssessment(UUID id, Assessment newData) {
         Optional<Assessment> existing = assessmentRepo.findById(id);
         if (existing.isEmpty()) {

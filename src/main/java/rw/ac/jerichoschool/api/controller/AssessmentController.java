@@ -60,6 +60,11 @@ public class AssessmentController {
         return new ResponseEntity<>(assessmentServ.findBetween(startDate, endDate), HttpStatus.OK);
     }
 
+    @GetMapping(value = "/stats/by-status")
+    public ResponseEntity<?> countByStatus() {
+        return new ResponseEntity<>(assessmentServ.countByStatus(), HttpStatus.OK);
+    }
+
     @GetMapping(value = "/{id}")
     public ResponseEntity<?> findById(@PathVariable UUID id) {
         Optional<Assessment> assessment = assessmentServ.findAssessmentById(id);

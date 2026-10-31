@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import rw.ac.jerichoschool.api.domain.Assessment;
@@ -20,4 +21,7 @@ public interface AssessmentRepository extends JpaRepository<Assessment, UUID> {
 
     boolean existsByTeacherAndAssessmentDateAndStatusNot(Teacher teacher, LocalDate assessmentDate,
             AssessmentStatus status);
+
+    @Query("SELECT a.status, COUNT(a) FROM Assessment a GROUP BY a.status")
+    List<Object[]> countByStatus();
 }
