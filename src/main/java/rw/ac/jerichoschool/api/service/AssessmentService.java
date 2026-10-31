@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import rw.ac.jerichoschool.api.domain.Assessment;
+import rw.ac.jerichoschool.api.domain.AssessmentStatus;
 import rw.ac.jerichoschool.api.domain.Pupil;
 import rw.ac.jerichoschool.api.domain.Teacher;
 import rw.ac.jerichoschool.api.repository.AssessmentRepository;
@@ -42,6 +43,10 @@ public class AssessmentService {
 
     public Optional<Assessment> findAssessmentById(UUID id) {
         return assessmentRepo.findById(id);
+    }
+
+    public List<Assessment> findByStatus(AssessmentStatus status) {
+        return assessmentRepo.findByStatusOrderByAssessmentDateAsc(status);
     }
 
     public String updateAssessment(UUID id, Assessment newData) {
