@@ -40,4 +40,13 @@ public class ReportEntryService {
     public List<ReportEntry> findByPupil(String admissionNumber) {
         return reportEntryRepo.findByPupilAdmissionNumber(admissionNumber);
     }
+
+    public String deleteReportEntry(UUID id) {
+        Optional<ReportEntry> existing = reportEntryRepo.findById(id);
+        if (existing.isEmpty()) {
+            return "The report entry with that id does not exist";
+        }
+        reportEntryRepo.delete(existing.get());
+        return "Report entry deleted successfully";
+    }
 }

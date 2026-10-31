@@ -14,6 +14,7 @@ import rw.ac.jerichoschool.api.domain.Pupil;
 import rw.ac.jerichoschool.api.domain.Teacher;
 import rw.ac.jerichoschool.api.repository.AssessmentRepository;
 import rw.ac.jerichoschool.api.repository.PupilRepository;
+import rw.ac.jerichoschool.api.repository.ReportEntryRepository;
 import rw.ac.jerichoschool.api.repository.TeacherRepository;
 
 @Service
@@ -21,6 +22,9 @@ public class AssessmentService {
 
     @Autowired
     private AssessmentRepository assessmentRepo;
+
+    @Autowired
+    private ReportEntryRepository reportEntryRepo;
 
     @Autowired
     private PupilRepository pupilRepo;
@@ -81,6 +85,9 @@ public class AssessmentService {
         Optional<Assessment> existing = assessmentRepo.findById(id);
         if (existing.isEmpty()) {
             return "The assessment with that id does not exist";
+        }
+        if (reportEntryRepo.existsByAssessment(existing.get())) {
+            return "That assessment has report entries, delete them first";
         }
         assessmentRepo.delete(existing.get());
         return "Assessment deleted successfully";

@@ -85,6 +85,8 @@ public class AssessmentController {
         String msg = assessmentServ.deleteAssessment(id);
         if (msg.equals("Assessment deleted successfully")) {
             return new ResponseEntity<>(msg, HttpStatus.OK);
+        } else if (msg.equals("That assessment has report entries, delete them first")) {
+            return new ResponseEntity<>(msg, HttpStatus.CONFLICT);
         } else {
             return new ResponseEntity<>(msg, HttpStatus.NOT_FOUND);
         }
