@@ -88,6 +88,23 @@ public class TeacherService {
         return "Subject added to the teacher";
     }
 
+    public String changeClassroom(UUID teacherId, int roomNumber) {
+        Optional<Teacher> teacher = teacherRepo.findById(teacherId);
+        if (teacher.isEmpty()) {
+            return "The teacher with that id does not exist";
+        }
+        Classroom classroom = classroomRepo.findByRoomNumber(roomNumber);
+        if (classroom == null) {
+            return "The classroom with that roomNumber does not exist";
+        }
+        if (teacherRepo.existsByClassroom(classroom)) {
+            return "That classroom is taken by another teacher";
+        }
+        teacher.get().setClassroom(classroom);
+        teacherRepo.save(teacher.get());
+        return "Classroom changed successfully";
+    }
+
     private String copyTeacher(Teacher target, Teacher newData) {
         if (newData.getClassroom() != null && newData.getClassroom().getId() != null) {
             Optional<Classroom> classroom = classroomRepo.findById(newData.getClassroom().getId());

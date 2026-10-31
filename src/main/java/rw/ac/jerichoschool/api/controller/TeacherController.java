@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -82,6 +83,18 @@ public class TeacherController {
         if (msg.equals("Subject added to the teacher")) {
             return new ResponseEntity<>(msg, HttpStatus.OK);
         } else if (msg.equals("The teacher already has that subject")) {
+            return new ResponseEntity<>(msg, HttpStatus.CONFLICT);
+        } else {
+            return new ResponseEntity<>(msg, HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PatchMapping(value = "/{teacherId}/classroom")
+    public ResponseEntity<?> changeClassroom(@PathVariable UUID teacherId, @RequestParam int roomNumber) {
+        String msg = teacherServ.changeClassroom(teacherId, roomNumber);
+        if (msg.equals("Classroom changed successfully")) {
+            return new ResponseEntity<>(msg, HttpStatus.OK);
+        } else if (msg.equals("That classroom is taken by another teacher")) {
             return new ResponseEntity<>(msg, HttpStatus.CONFLICT);
         } else {
             return new ResponseEntity<>(msg, HttpStatus.NOT_FOUND);

@@ -14,4 +14,6 @@ public interface ClassroomRepository extends JpaRepository<Classroom, UUID> {
 
     @Query("SELECT c FROM Classroom c WHERE NOT EXISTS (SELECT t FROM Teacher t WHERE t.classroom = c) ORDER BY c.roomNumber ASC")
     List<Classroom> findFreeClassrooms();
+
+    Classroom findByRoomNumber(int roomNumber);
 }
