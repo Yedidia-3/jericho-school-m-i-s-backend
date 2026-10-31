@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import rw.ac.jerichoschool.api.domain.Pupil;
@@ -12,4 +14,7 @@ import rw.ac.jerichoschool.api.domain.Pupil;
 public interface PupilRepository extends JpaRepository<Pupil, UUID> {
 
     List<Pupil> findByLastNameIgnoreCaseOrderByFirstNameAsc(String lastName);
+
+    @Query("SELECT DISTINCT a.pupil FROM Assessment a WHERE a.teacher.id = :teacherId")
+    List<Pupil> findPupilsByTeacherId(@Param("teacherId") UUID teacherId);
 }

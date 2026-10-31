@@ -46,6 +46,15 @@ public class PupilController {
         return new ResponseEntity<>(pupilServ.findByLastName(lastName), HttpStatus.OK);
     }
 
+    @GetMapping(value = "/of-teacher/{teacherId}")
+    public ResponseEntity<?> findPupilsByTeacher(@PathVariable UUID teacherId) {
+        if (!pupilServ.teacherExists(teacherId)) {
+            return new ResponseEntity<>("The teacher with that id does not exist", HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<>(pupilServ.findPupilsByTeacher(teacherId), HttpStatus.OK);
+        }
+    }
+
     @GetMapping(value = "/{id}")
     public ResponseEntity<?> findById(@PathVariable UUID id) {
         Optional<Pupil> pupil = pupilServ.findPupilById(id);

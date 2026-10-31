@@ -9,12 +9,16 @@ import org.springframework.stereotype.Service;
 
 import rw.ac.jerichoschool.api.domain.Pupil;
 import rw.ac.jerichoschool.api.repository.PupilRepository;
+import rw.ac.jerichoschool.api.repository.TeacherRepository;
 
 @Service
 public class PupilService {
 
     @Autowired
     private PupilRepository pupilRepo;
+
+    @Autowired
+    private TeacherRepository teacherRepo;
 
     public String savePupil(Pupil pupil) {
         pupilRepo.save(pupil);
@@ -31,6 +35,14 @@ public class PupilService {
 
     public List<Pupil> findByLastName(String lastName) {
         return pupilRepo.findByLastNameIgnoreCaseOrderByFirstNameAsc(lastName);
+    }
+
+    public boolean teacherExists(UUID teacherId) {
+        return teacherRepo.existsById(teacherId);
+    }
+
+    public List<Pupil> findPupilsByTeacher(UUID teacherId) {
+        return pupilRepo.findPupilsByTeacherId(teacherId);
     }
 
     public String updatePupil(UUID id, Pupil newData) {
