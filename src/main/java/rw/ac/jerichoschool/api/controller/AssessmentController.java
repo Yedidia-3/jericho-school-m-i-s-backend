@@ -65,6 +65,13 @@ public class AssessmentController {
         return new ResponseEntity<>(assessmentServ.countByStatus(), HttpStatus.OK);
     }
 
+    @PatchMapping(value = "/cancel-day")
+    public ResponseEntity<?> cancelDay(@RequestParam UUID teacherId, @RequestParam String date) {
+        LocalDate assessmentDate = LocalDate.parse(date);
+        String msg = assessmentServ.cancelDay(teacherId, assessmentDate);
+        return new ResponseEntity<>(msg, HttpStatus.OK);
+    }
+
     @GetMapping(value = "/{id}")
     public ResponseEntity<?> findById(@PathVariable UUID id) {
         Optional<Assessment> assessment = assessmentServ.findAssessmentById(id);

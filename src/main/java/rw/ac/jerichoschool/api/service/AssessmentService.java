@@ -7,6 +7,7 @@ import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import rw.ac.jerichoschool.api.domain.Assessment;
 import rw.ac.jerichoschool.api.domain.AssessmentStatus;
@@ -70,6 +71,13 @@ public class AssessmentService {
 
     public List<Object[]> countByStatus() {
         return assessmentRepo.countByStatus();
+    }
+
+    @Transactional
+    public String cancelDay(UUID teacherId, LocalDate date) {
+        int cancelled = assessmentRepo.cancelByTeacherAndDate(
+                teacherId, date, AssessmentStatus.ABSENT, AssessmentStatus.GRADED);
+        return cancelled + " assessments cancelled";
     }
 
     public String updateAssessment(UUID id, Assessment newData) {

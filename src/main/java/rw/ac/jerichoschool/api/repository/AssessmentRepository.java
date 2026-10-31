@@ -5,7 +5,9 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import rw.ac.jerichoschool.api.domain.Assessment;
@@ -24,4 +26,9 @@ public interface AssessmentRepository extends JpaRepository<Assessment, UUID> {
 
     @Query("SELECT a.status, COUNT(a) FROM Assessment a GROUP BY a.status")
     List<Object[]> countByStatus();
+
+    @Modifying
+    @Query("UPDATE Assessment a SET a.status = :status WHERE a.teacher.id = :teacherId AND a.assessmentDate = :date AND a.status <> :graded")
+    int cancelByTeacherAndDate(@Param("teacherId") UUID teacherId, @Param("date") LocalDate date,
+            @Param("status") AssessmentStatus status, @Param("graded") AssessmentStatus graded);
 }
