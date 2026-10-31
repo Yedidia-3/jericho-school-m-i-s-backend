@@ -1,6 +1,7 @@
 package rw.ac.jerichoschool.api.service;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -34,5 +35,9 @@ public class ReportEntryService {
         reportEntry.setEnteredDate(LocalDate.now());
         reportEntryRepo.save(reportEntry);
         return "Report entry saved successfully";
+    }
+
+    public List<ReportEntry> findByPupil(String admissionNumber) {
+        return reportEntryRepo.findByPupilAdmissionNumber(admissionNumber);
     }
 }
