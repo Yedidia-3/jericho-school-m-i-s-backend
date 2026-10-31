@@ -33,6 +33,10 @@ public class AssessmentController {
         String msg = assessmentServ.saveAssessment(assessment);
         if (msg.equals("Assessment saved successfully")) {
             return new ResponseEntity<>(msg, HttpStatus.CREATED);
+        } else if (msg.equals("Teacher already has an assessment on that date")) {
+            return new ResponseEntity<>(msg, HttpStatus.CONFLICT);
+        } else if (msg.equals("Assessment date cannot be in the past")) {
+            return new ResponseEntity<>(msg, HttpStatus.BAD_REQUEST);
         } else {
             return new ResponseEntity<>(msg, HttpStatus.NOT_FOUND);
         }

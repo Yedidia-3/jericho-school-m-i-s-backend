@@ -29,11 +29,21 @@ public class AssessmentService {
     private TeacherRepository teacherRepo;
 
     public String saveAssessment(Assessment assessment) {
+        if (assessment.getAssessmentDate() != null
+                && assessment.getAssessmentDate().isBefore(LocalDate.now())) {
+            return "Assessment date cannot be in the past";
+        }
         Assessment toSave = new Assessment();
         String error = copyAssessment(toSave, assessment);
         if (error != null) {
             return error;
         }
+        boolean alreadyBooked = assessmentRepo.existsByTeacherAndAssessmentDateAndStatusNot(
+                toSave.getTeacher(), toSave.getAssessmentDate(), AssessmentStatus.ABSENT);
+        if (alreadyBooked) {
+            return "Teacher already has an assessment on that date";
+        }
+        toSave.setStatus(AssessmentStatus.PLANNED);
         assessmentRepo.save(toSave);
         return "Assessment saved successfully";
     }
