@@ -29,6 +29,10 @@ public class PupilService {
         return pupilRepo.findById(id);
     }
 
+    public List<Pupil> findByLastName(String lastName) {
+        return pupilRepo.findByLastNameIgnoreCaseOrderByFirstNameAsc(lastName);
+    }
+
     public String updatePupil(UUID id, Pupil newData) {
         Optional<Pupil> existing = pupilRepo.findById(id);
         if (existing.isEmpty()) {

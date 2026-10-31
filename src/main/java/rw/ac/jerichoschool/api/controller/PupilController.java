@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import rw.ac.jerichoschool.api.domain.Pupil;
@@ -38,6 +39,11 @@ public class PupilController {
     @GetMapping(value = "/all")
     public ResponseEntity<?> findAll() {
         return new ResponseEntity<>(pupilServ.findAllPupils(), HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/by-last-name")
+    public ResponseEntity<?> findByLastName(@RequestParam String lastName) {
+        return new ResponseEntity<>(pupilServ.findByLastName(lastName), HttpStatus.OK);
     }
 
     @GetMapping(value = "/{id}")
