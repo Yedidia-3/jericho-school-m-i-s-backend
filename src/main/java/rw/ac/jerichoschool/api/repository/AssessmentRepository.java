@@ -1,5 +1,6 @@
 package rw.ac.jerichoschool.api.repository;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -13,4 +14,6 @@ import rw.ac.jerichoschool.api.domain.AssessmentStatus;
 public interface AssessmentRepository extends JpaRepository<Assessment, UUID> {
 
     List<Assessment> findByStatusOrderByAssessmentDateAsc(AssessmentStatus status);
+
+    List<Assessment> findByAssessmentDateBetweenOrderByAssessmentDateAsc(LocalDate start, LocalDate end);
 }

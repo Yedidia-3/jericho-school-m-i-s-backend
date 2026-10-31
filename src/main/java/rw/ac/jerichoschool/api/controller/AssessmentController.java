@@ -1,5 +1,6 @@
 package rw.ac.jerichoschool.api.controller;
 
+import java.time.LocalDate;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -45,6 +46,13 @@ public class AssessmentController {
     @GetMapping(value = "/by-status")
     public ResponseEntity<?> findByStatus(@RequestParam AssessmentStatus status) {
         return new ResponseEntity<>(assessmentServ.findByStatus(status), HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/between")
+    public ResponseEntity<?> findBetween(@RequestParam String start, @RequestParam String end) {
+        LocalDate startDate = LocalDate.parse(start);
+        LocalDate endDate = LocalDate.parse(end);
+        return new ResponseEntity<>(assessmentServ.findBetween(startDate, endDate), HttpStatus.OK);
     }
 
     @GetMapping(value = "/{id}")

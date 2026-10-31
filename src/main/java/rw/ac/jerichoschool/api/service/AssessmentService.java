@@ -1,5 +1,6 @@
 package rw.ac.jerichoschool.api.service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -47,6 +48,10 @@ public class AssessmentService {
 
     public List<Assessment> findByStatus(AssessmentStatus status) {
         return assessmentRepo.findByStatusOrderByAssessmentDateAsc(status);
+    }
+
+    public List<Assessment> findBetween(LocalDate start, LocalDate end) {
+        return assessmentRepo.findByAssessmentDateBetweenOrderByAssessmentDateAsc(start, end);
     }
 
     public String updateAssessment(UUID id, Assessment newData) {
