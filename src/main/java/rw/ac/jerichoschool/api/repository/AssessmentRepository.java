@@ -24,6 +24,10 @@ public interface AssessmentRepository extends JpaRepository<Assessment, UUID> {
     boolean existsByTeacherAndAssessmentDateAndStatusNot(Teacher teacher, LocalDate assessmentDate,
             AssessmentStatus status);
 
+    long countByAssessmentDate(LocalDate assessmentDate);
+
+    long countByStatus(AssessmentStatus status);
+
     @Query("SELECT a.status, COUNT(a) FROM Assessment a GROUP BY a.status")
     List<Object[]> countByStatus();
 

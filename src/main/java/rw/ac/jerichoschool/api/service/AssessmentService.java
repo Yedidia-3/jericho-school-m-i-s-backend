@@ -6,6 +6,8 @@ import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -78,6 +80,10 @@ public class AssessmentService {
         int cancelled = assessmentRepo.cancelByTeacherAndDate(
                 teacherId, date, AssessmentStatus.ABSENT, AssessmentStatus.GRADED);
         return cancelled + " assessments cancelled";
+    }
+
+    public Page<Assessment> findAssessmentsPage(Pageable pageable) {
+        return assessmentRepo.findAll(pageable);
     }
 
     public String updateAssessment(UUID id, Assessment newData) {
