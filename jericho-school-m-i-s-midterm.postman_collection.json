@@ -1,0 +1,178 @@
+{
+  "info": {
+    "name": "Jericho School MIS Midterm",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "A2",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "http://localhost:8082/api/pupils/all"
+      }
+    },
+    {
+      "name": "B1",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "http://localhost:8082/api/pupils/by-last-name?lastName=umutoni"
+      }
+    },
+    {
+      "name": "B2",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "http://localhost:8082/api/assessments/by-status?status=PLANNED"
+      }
+    },
+    {
+      "name": "B3",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "http://localhost:8082/api/assessments/between?start=2026-10-01&end=2026-10-31"
+      }
+    },
+    {
+      "name": "C1",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "http://localhost:8082/api/teachers/by-subject?name=math"
+      }
+    },
+    {
+      "name": "C2",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "http://localhost:8082/api/classrooms/free"
+      }
+    },
+    {
+      "name": "C3",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "http://localhost:8082/api/subjects/unused"
+      }
+    },
+    {
+      "name": "C4",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "http://localhost:8082/api/pupils/of-teacher/469c25d9-c27b-4b85-ac52-e4b2e7787916"
+      }
+    },
+    {
+      "name": "D1",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"assessmentDate\": \"2027-01-15\",\n  \"status\": \"GRADED\",\n  \"term\": \"Term 1\",\n  \"maxMarks\": 100,\n  \"pupil\": { \"id\": \"819f709c-aa45-4c17-ba61-a6b136513df5\" },\n  \"teacher\": { \"id\": \"469c25d9-c27b-4b85-ac52-e4b2e7787916\" }\n}"
+        },
+        "url": "http://localhost:8082/api/assessments/save"
+      }
+    },
+    {
+      "name": "D2",
+      "request": {
+        "method": "PATCH",
+        "header": [],
+        "url": "http://localhost:8082/api/assessments/18068018-05a1-4549-93da-32fdfae10c1a/status?status=SAT"
+      }
+    },
+    {
+      "name": "D3",
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "url": "http://localhost:8082/api/teachers/038c5db1-d6f9-4a8d-b29f-3b0f75eb632b/subjects/ab1dcc64-56cb-4f3f-aed0-027b416ea619"
+      }
+    },
+    {
+      "name": "D4",
+      "request": {
+        "method": "PATCH",
+        "header": [],
+        "url": "http://localhost:8082/api/teachers/469c25d9-c27b-4b85-ac52-e4b2e7787916/classroom?roomNumber=4"
+      }
+    },
+    {
+      "name": "E1",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"competence\": \"Reading fluency\",\n  \"comment\": \"Reads confidently, needs work on punctuation\",\n  \"marks\": 78\n}"
+        },
+        "url": "http://localhost:8082/api/report-entries/save?assessmentId=dbeb61a9-f2d5-4e0e-9950-b8ccf382b4f1"
+      }
+    },
+    {
+      "name": "E2",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "http://localhost:8082/api/report-entries/pupil/JS-2024-0112"
+      }
+    },
+    {
+      "name": "E3",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": "http://localhost:8082/api/report-entries/delete/87cd83a9-72e1-4794-9bbb-816684ae1055"
+      }
+    },
+    {
+      "name": "F1",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "http://localhost:8082/api/assessments/stats/by-status"
+      }
+    },
+    {
+      "name": "F2",
+      "request": {
+        "method": "PATCH",
+        "header": [],
+        "url": "http://localhost:8082/api/assessments/cancel-day?teacherId=469c25d9-c27b-4b85-ac52-e4b2e7787916&date=2026-10-20"
+      }
+    },
+    {
+      "name": "dashboard",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "http://localhost:8082/api/dashboard/summary"
+      }
+    },
+    {
+      "name": "page",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "http://localhost:8082/api/assessments/page?page=0&size=5&sort=assessmentDate,desc"
+      }
+    }
+  ]
+}

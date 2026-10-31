@@ -1,6 +1,17 @@
-# Jericho School MIS — domain map
+# Jericho School MIS
 
-Planning document for the backend. Application code starts only after the instruction **start coding**.
+- **Name:** Yedidia KWAME
+- **Student ID:** 28050
+- **Project:** jericho-school-m-i-s
+
+## Run the API
+
+1. Use Java 21. If `java -version` is not 21, set `JAVA_HOME` to the Java 21 JDK and put `$JAVA_HOME/bin` first on `PATH`.
+2. Start PostgreSQL. The API uses database `jericho_mis_db` on `localhost:5432`, user `postgres`, password `letmein`.
+3. From this folder run `mvn spring-boot:run`.
+4. The API listens on `http://localhost:8082`.
+
+## Domain map
 
 A pupil sits an assessment set and marked by a teacher. A teacher is class teacher of one classroom and holds one or more subjects. An assessment moves `PLANNED → SAT → GRADED` or `ABSENT`. `GRADED` and `ABSENT` are final. Report entries exist only after an assessment is `GRADED`.
 
