@@ -75,4 +75,16 @@ public class TeacherController {
             return new ResponseEntity<>(msg, HttpStatus.NOT_FOUND);
         }
     }
+
+    @PutMapping(value = "/{teacherId}/subjects/{subjectId}")
+    public ResponseEntity<?> addSubject(@PathVariable UUID teacherId, @PathVariable UUID subjectId) {
+        String msg = teacherServ.addSubject(teacherId, subjectId);
+        if (msg.equals("Subject added to the teacher")) {
+            return new ResponseEntity<>(msg, HttpStatus.OK);
+        } else if (msg.equals("The teacher already has that subject")) {
+            return new ResponseEntity<>(msg, HttpStatus.CONFLICT);
+        } else {
+            return new ResponseEntity<>(msg, HttpStatus.NOT_FOUND);
+        }
+    }
 }

@@ -71,6 +71,23 @@ public class TeacherService {
         return "Teacher deleted successfully";
     }
 
+    public String addSubject(UUID teacherId, UUID subjectId) {
+        Optional<Teacher> teacher = teacherRepo.findById(teacherId);
+        if (teacher.isEmpty()) {
+            return "The teacher with that id does not exist";
+        }
+        Optional<Subject> subject = subjectRepo.findById(subjectId);
+        if (subject.isEmpty()) {
+            return "That subject does not exist";
+        }
+        if (teacher.get().getSubjects().contains(subject.get())) {
+            return "The teacher already has that subject";
+        }
+        teacher.get().getSubjects().add(subject.get());
+        teacherRepo.save(teacher.get());
+        return "Subject added to the teacher";
+    }
+
     private String copyTeacher(Teacher target, Teacher newData) {
         if (newData.getClassroom() != null && newData.getClassroom().getId() != null) {
             Optional<Classroom> classroom = classroomRepo.findById(newData.getClassroom().getId());
