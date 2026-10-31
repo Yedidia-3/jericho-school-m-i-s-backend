@@ -1,0 +1,94 @@
+package rw.ac.jerichoschool.api.service;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import rw.ac.jerichoschool.api.domain.Assessment;
+import rw.ac.jerichoschool.api.domain.Pupil;
+import rw.ac.jerichoschool.api.domain.Teacher;
+import rw.ac.jerichoschool.api.repository.AssessmentRepository;
+import rw.ac.jerichoschool.api.repository.PupilRepository;
+import rw.ac.jerichoschool.api.repository.TeacherRepository;
+
+@Service
+public class AssessmentService {
+
+    @Autowired
+    private AssessmentRepository assessmentRepo;
+
+    @Autowired
+    private PupilRepository pupilRepo;
+
+    @Autowired
+    private TeacherRepository teacherRepo;
+
+    public String saveAssessment(Assessment assessment) {
+        Assessment toSave = new Assessment();
+        String error = copyAssessment(toSave, assessment);
+        if (error != null) {
+            return error;
+        }
+        assessmentRepo.save(toSave);
+        return "Assessment saved successfully";
+    }
+
+    public List<Assessment> findAllAssessments() {
+        return assessmentRepo.findAll();
+    }
+
+    public Optional<Assessment> findAssessmentById(UUID id) {
+        return assessmentRepo.findById(id);
+    }
+
+    public String updateAssessment(UUID id, Assessment newData) {
+        Optional<Assessment> existing = assessmentRepo.findById(id);
+        if (existing.isEmpty()) {
+            return "The assessment with that id does not exist";
+        }
+        String error = copyAssessment(existing.get(), newData);
+        if (error != null) {
+            return error;
+        }
+        assessmentRepo.save(existing.get());
+        return "Assessment updated successfully";
+    }
+
+    public String deleteAssessment(UUID id) {
+        Optional<Assessment> existing = assessmentRepo.findById(id);
+        if (existing.isEmpty()) {
+            return "The assessment with that id does not exist";
+        }
+        assessmentRepo.delete(existing.get());
+        return "Assessment deleted successfully";
+    }
+
+    private String copyAssessment(Assessment target, Assessment newData) {
+        if (newData.getPupil() == null || newData.getPupil().getId() == null) {
+            return "The pupil with that id does not exist";
+        }
+        Optional<Pupil> pupil = pupilRepo.findById(newData.getPupil().getId());
+        if (pupil.isEmpty()) {
+            return "The pupil with that id does not exist";
+        }
+
+        if (newData.getTeacher() == null || newData.getTeacher().getId() == null) {
+            return "The teacher with that id does not exist";
+        }
+        Optional<Teacher> teacher = teacherRepo.findById(newData.getTeacher().getId());
+        if (teacher.isEmpty()) {
+            return "The teacher with that id does not exist";
+        }
+
+        target.setAssessmentDate(newData.getAssessmentDate());
+        target.setStatus(newData.getStatus());
+        target.setTerm(newData.getTerm());
+        target.setMaxMarks(newData.getMaxMarks());
+        target.setPupil(pupil.get());
+        target.setTeacher(teacher.get());
+        return null;
+    }
+}
